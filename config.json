@@ -1,6 +1,4 @@
 {
-  "name": "mcp-server-mysql",
-  "version": "1.0.0",
   "containerName": "db-mcp-server-mysql-1",
   "username": "root",
   "password": "root",
