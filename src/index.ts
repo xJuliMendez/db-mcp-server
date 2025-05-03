@@ -1,25 +1,24 @@
 import { exec } from 'node:child_process'
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
+import process from 'node:process'
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { z } from 'zod'
 import { loadConfigFromFile } from './defineConfig.js'
+import { getConfigPathFromCommandLineArguments } from './commandArgument.js'
 
 const MCP_CONSTANTS = {
   TEXT: 'text',
 } as const
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
 
 const server = new McpServer({
   name: 'mcp-server-mysql',
   version: '1.0.0',
 })
 
+const configPath = getConfigPathFromCommandLineArguments(process)
+
 async function execQuery(query: string): Promise<string> {
-  const config = loadConfigFromFile(path.resolve(__dirname, '../config.json'))
+  const config = loadConfigFromFile(configPath)
 
   const command = `docker exec ${config.containerName} mysql -u ${config.username} -p${config.password} ${config.database} -e "${query}"`
 
