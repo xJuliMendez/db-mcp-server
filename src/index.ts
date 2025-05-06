@@ -59,8 +59,8 @@ async function getInfoFromDockerByQuery(query: string) {
 }
 
 server.tool(
-  'getDabaseInfo',
-  'Get database info from the configuration file',
+  'getDatabaseInfo',
+  'Provide a query to get information from the database',
   { query: z.string() },
   async ({ query }) => getInfoFromDockerByQuery(query),
 )
